@@ -673,6 +673,9 @@ void board_init_r(gd_t *dummy1, ulong dummy2)
 	struct spl_image_info spl_image;
 	int ret;
 
+	printf("Ready for debugger connection...##\n");
+	while(1);
+
 	debug(">>" SPL_TPL_PROMPT "board_init_r()\n");
 
 	spl_set_bd();

@@ -31,6 +31,19 @@ int spl_board_init_f(void)
 	return 0;
 }
 
+int spl_parse_board_header(struct spl_image_info *spl_image,
+				  const void *image_header, size_t size)
+{
+	spl_image->size = 0x4 << 22;
+
+	spl_image->entry_point = 0x40000000;
+	spl_image->load_addr = 0x40000000;
+	spl_image->os = IH_OS_U_BOOT;
+	spl_image->name = "U-Boot";
+
+	return 0;
+}
+
 u32 spl_boot_device(void)
 {
 	int boot_mode = 0;
