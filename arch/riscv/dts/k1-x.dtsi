@@ -14,6 +14,7 @@
 
 	aliases {
 		serial0 = &uart0;
+		serial9 = &uart9;
 		mmc0 = &sdhci0;
 		mmc1 = &sdhci1;
 		mmc2 = &sdhci2;
@@ -21,7 +22,7 @@
 
 	chosen {
 		bootargs = "earlycon=sbi console=ttyS0,115200 debug loglevel=8,initcall_debug=1 rdinit=/init.tmp";
-		stdout-path = "serial0:115200n8";
+		stdout-path = "serial9:115200n8";
 		opensbi-domains {
 			compatible = "opensbi,domain,config";
 
@@ -355,6 +356,14 @@
 		uart0: uart@d4017000 {
 			compatible = "ns16550";
 			reg = <0x00000000 0xD4017000 0x00000000 0x00000100>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			clock-frequency = <14000000>;
+		};
+		
+		uart9: uart@d4017800 {
+			compatible = "ns16550";
+			reg = <0x00000000 0xD4017800 0x00000000 0x00000100>;
 			reg-shift = <2>;
 			reg-io-width = <4>;
 			clock-frequency = <14000000>;
