@@ -19,6 +19,61 @@
 		mmc2 = &sdhci2;
 	};
 
+	chosen {
+		bootargs = "earlycon=sbi console=ttyS0,115200 debug loglevel=8,initcall_debug=1 rdinit=/init.tmp";
+		stdout-path = "serial0:115200n8";
+		opensbi-domains {
+			compatible = "opensbi,domain,config";
+
+			rpmsg_shmem: rpmsg_shmem {
+				compatible = "opensbi,domain,memregion";
+				base = <0x0 0x4e400000>;
+				order = <22>;
+			};
+
+			rtcode: rtcode {
+				compatible = "opensbi,domain,memregion";
+				base = <0x0 0x4e800000>;
+				order = <23>;
+			};
+
+			rtheap: rtheap {
+				compatible = "opensbi,domain,memregion";
+				base = <0x0 0x4f000000>;
+				order = <24>;
+			};
+
+			allmem: allmem {
+				compatible = "opensbi,domain,memregion";
+				base = <0x0 0x0>;
+				order = <64>;
+			};
+
+			tdomain: t-domain {
+				compatible = "opensbi,domain,instance";
+				possible-harts = <&cpu_3>;
+				regions = <&rpmsg_shmem 0x3f>, <&rtcode 0x3f>, <&rtheap 0x3f>, <&allmem 0x3f>;
+				boot-hart = <&cpu_3>;
+				next-arg1 = <0x0 0x0>;
+				next-addr = <0x0 0x4E800000>;
+				next-mode = <0x1>;
+			};
+			
+			udomain: u-domain {
+				compatible = "opensbi,domain,instance";
+				possible-harts = <&cpu_0 &cpu_1 &cpu_2 &cpu_4 &cpu_5 &cpu_6 &cpu_7>;
+				/* regions = <&rpmsg_shmem 0x3f>, <&rtcode 0x0>, <&rtheap 0x0>, <&allmem 0x3f>; */
+				regions = <&rpmsg_shmem 0x3f>, <&rtcode 0x3f>, <&rtheap 0x3f>, <&allmem 0x3f>;
+				next-addr = <0x0 0x00200000>;
+				boot-hart = <&cpu_1>;
+				system-reset-allowed;
+				system-suspend-allowed;
+			};
+
+
+		};
+	};
+
 	cpus: cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -30,6 +85,7 @@
 			status = "okay";
 			riscv,isa = "rv64imafdcvsu_zicsr_zifencei_zicbom_zihintpause_zba_zbb_zbc_zbs_svpbmt_sstc_sscofpmf";
 			mmu-type = "riscv,sv39";
+			opensbi-domain = <&udomain>;
 
 			cpu0_intc: interrupt-controller {
 				#interrupt-cells = <1>;
@@ -44,6 +100,7 @@
 			status = "okay";
 			riscv,isa = "rv64imafdcvsu_zicsr_zifencei_zicbom_zihintpause_zba_zbb_zbc_zbs_svpbmt_sstc_sscofpmf";
 			mmu-type = "riscv,sv39";
+			opensbi-domain = <&udomain>;
 
 			cpu1_intc: interrupt-controller {
 				#interrupt-cells = <1>;
@@ -58,6 +115,7 @@
 			status = "okay";
 			riscv,isa = "rv64imafdcvsu_zicsr_zifencei_zicbom_zihintpause_zba_zbb_zbc_zbs_svpbmt_sstc_sscofpmf";
 			mmu-type = "riscv,sv39";
+			opensbi-domain = <&udomain>;
 
 			cpu2_intc: interrupt-controller {
 				#interrupt-cells = <1>;
@@ -72,6 +130,7 @@
 			status = "okay";
 			riscv,isa = "rv64imafdcvsu_zicsr_zifencei_zicbom_zihintpause_zba_zbb_zbc_zbs_svpbmt_sstc_sscofpmf";
 			mmu-type = "riscv,sv39";
+			opensbi-domain = <&tdomain>;
 
 			cpu3_intc: interrupt-controller {
 				#interrupt-cells = <1>;
@@ -86,6 +145,7 @@
 			status = "okay";
 			riscv,isa = "rv64imafdcvsu_zicsr_zifencei_zicbom_zihintpause_zba_zbb_zbc_zbs_svpbmt_sstc_sscofpmf";
 			mmu-type = "riscv,sv39";
+			opensbi-domain = <&udomain>;
 
 			cpu4_intc: interrupt-controller {
 				#interrupt-cells = <1>;
@@ -100,6 +160,7 @@
 			status = "okay";
 			riscv,isa = "rv64imafdcvsu_zicsr_zifencei_zicbom_zihintpause_zba_zbb_zbc_zbs_svpbmt_sstc_sscofpmf";
 			mmu-type = "riscv,sv39";
+			opensbi-domain = <&udomain>;
 
 			cpu5_intc: interrupt-controller {
 				#interrupt-cells = <1>;
@@ -114,6 +175,7 @@
 			status = "okay";
 			riscv,isa = "rv64imafdcvsu_zicsr_zifencei_zicbom_zihintpause_zba_zbb_zbc_zbs_svpbmt_sstc_sscofpmf";
 			mmu-type = "riscv,sv39";
+			opensbi-domain = <&udomain>;
 
 			cpu6_intc: interrupt-controller {
 				#interrupt-cells = <1>;
@@ -128,6 +190,7 @@
 			status = "okay";
 			riscv,isa = "rv64imafdcvsu_zicsr_zifencei_zicbom_zihintpause_zba_zbb_zbc_zbs_svpbmt_sstc_sscofpmf";
 			mmu-type = "riscv,sv39";
+			opensbi-domain = <&udomain>;
 
 			cpu7_intc: interrupt-controller {
 				#interrupt-cells = <1>;

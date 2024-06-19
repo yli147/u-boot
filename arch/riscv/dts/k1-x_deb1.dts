@@ -18,11 +18,12 @@
 		device_type = "memory";
 		reg = <0x00000000 0x00000000 0x00000000 0x80000000>;
 	};
-
+/* 
 	chosen {
 		bootargs = "earlycon=sbi console=ttyS0,115200 debug loglevel=8,initcall_debug=1 rdinit=/init.tmp";
 		stdout-path = "serial0:115200n8";
 	};
+*/
 
 	usb3hub:usb3hub {
 		compatible = "spacemit,usb-hub";
