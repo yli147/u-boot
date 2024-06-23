@@ -66,6 +66,7 @@
 				/* regions = <&rpmsg_shmem 0x3f>, <&rtcode 0x0>, <&rtheap 0x0>, <&allmem 0x3f>; */
 				regions = <&rpmsg_shmem 0x3f>, <&rtcode 0x3f>, <&rtheap 0x3f>, <&allmem 0x3f>;
 				next-addr = <0x0 0x00200000>;
+				next-arg1 = <0x0 0x0031b180>;
 				boot-hart = <&cpu_1>;
 				system-reset-allowed;
 				system-suspend-allowed;
