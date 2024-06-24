@@ -55,7 +55,7 @@
 				possible-harts = <&cpu_3>;
 				regions = <&rpmsg_shmem 0x3f>, <&rtcode 0x3f>, <&rtheap 0x3f>, <&allmem 0x3f>;
 				boot-hart = <&cpu_3>;
-				next-arg1 = <0x0 0x0>;
+				next-arg1 = <0x0 0x42200000>;
 				next-addr = <0x0 0x4E800000>;
 				next-mode = <0x1>;
 			};
