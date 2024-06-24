@@ -70,13 +70,13 @@
 		};
 
 		fdt {
-			description = "k1-x_deb1";
-			data = /incbin/("./arch/riscv/dts/k1-x_deb1.dtb");
+			description = "k1-x_opensbi-deb1";
+			data = /incbin/("k1-x_opensbi-deb1.dtb");
 			type = "flat_dt";
 			arch = "riscv";
 			compression = "none";
 			fdt_blob: blob-ext {
-				filename = "k1-x_deb1.dtb";
+				filename = "k1-x_opensbi-deb1.dtb";
 			};
 		};
 	};
