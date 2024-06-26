@@ -39,7 +39,7 @@
 			type = "flat_dt";
 			arch = "riscv";
 			compression = "none";
-                        load = <0x42200000>;
+                        load = <0x44200000>;
 			fdt_rt_blob: blob-ext {
 				filename = "k1-x_rt-deb1.dtb";
 			};
