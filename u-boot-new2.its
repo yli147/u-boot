@@ -26,7 +26,7 @@
 			os = "RTOS";
 			arch = "riscv";
 			compression = "none";
-			load = <0x4E800000>;
+			load = <0x40200000>;
 			/* load = <0x00400000>; */
 			rtos_blob: blob-ext {
 				filename = "Image";
