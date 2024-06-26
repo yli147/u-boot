@@ -21,7 +21,7 @@
 
 		rtos {
 			description = "RTOS";
-			data = /incbin/("s-hello.bin");
+			data = /incbin/("ns-hello.bin");
 			type = "standalone";
 			os = "RTOS";
 			arch = "riscv";
@@ -29,7 +29,7 @@
 			load = <0x40200000>;
 			/* load = <0x00400000>; */
 			rtos_blob: blob-ext {
-				filename = "s-hello.bin";
+				filename = "ns-hello.bin";
 			};
 		};
 
