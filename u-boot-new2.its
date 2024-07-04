@@ -32,7 +32,17 @@
 				filename = "Image";
 			};
 		};
-
+		initramfs {
+				description = "RAMFS";
+				data = /incbin/("initramfs.cpio.gz");
+				type = "standalone";
+				arch = "riscv";
+				compression = "none";
+				load = <0x48200000>;
+				ramfs_blob: blob-ext {
+						filename = "initramfs.cpio.gz";
+				};
+		};
 		fdt-rt {
 			description = "k1-x-linux-os";
 			data = /incbin/("k1-x_rt-deb1.dtb");
@@ -45,14 +55,26 @@
 			};
 		};
 
+		fdt-u-boot {
+			description = "k1-x-u-boot";
+			data = /incbin/("k1-x_u-boot-deb1.dtb");
+			type = "flat_dt";
+			arch = "riscv";
+			compression = "none";
+            load = <0x02200000>;
+			fdt_uboot_blob: blob-ext {
+				filename = "k1-x_u-boot-deb1.dtb";
+			};
+		};
+
 		fdt {
-			description = "k1-x_deb1";
-			data = /incbin/("./arch/riscv/dts/k1-x_deb1.dtb");
+			description = "k1-x_opensbi-deb1";
+			data = /incbin/("k1-x_opensbi-deb1.dtb");
 			type = "flat_dt";
 			arch = "riscv";
 			compression = "none";
 			fdt_blob: blob-ext {
-				filename = "k1-x_deb1.dtb";
+				filename = "k1-x_opensbi-deb1.dtb";
 			};
 		};
 	};
@@ -61,7 +83,7 @@
 		default = "conf";
 		conf {
 			description = "U-boot FIT image for k1x";
-			loadables = "uboot", "rtos", "fdt-rt";
+			loadables = "uboot", "rtos", "initramfs", "fdt-rt", "fdt-u-boot";
 			fdt = "fdt";
 		};
 	};
